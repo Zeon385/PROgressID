@@ -50,7 +50,7 @@ map<uint256, map<uint256, CDataStream*> > mapOrphanTransactionsByPrev;
 // Constant stuff for coinbase transactions we create:
 CScript COINBASE_FLAGS;
 
-const string strMessageMagic = "barcoin Signed Message:\n";
+const string strMessageMagic = "progressid Signed Message:\n";
 
 double dHashesPerSec;
 int64 nHPSTimerStart;
@@ -828,13 +828,13 @@ uint256 static GetOrphanRoot(const CBlock* pblock)
 
 int64 static GetBlockValue(int nHeight, int64 nFees)
 {
-    int64 nSubsidy = 1 * COIN;
+    int64 nSubsidy = 385 * COIN;
 
     return nSubsidy + nFees;
 }
 
-static const int64 nTargetTimespan = 1 * 24 * 60 * 60; // barcoin: 1 days
-static const int64 nTargetSpacing = 120; // barcoin: 2 minute blocks
+static const int64 nTargetTimespan = 1 * 24 * 60 * 60; // progressid: 1 days
+static const int64 nTargetSpacing = 2400; // progressid: 40 minute blocks
 static const int64 nInterval = nTargetTimespan / nTargetSpacing;
 
 // Thanks: Balthazar for suggesting the following fix
@@ -1178,7 +1178,7 @@ bool CTransaction::ConnectInputs(MapPrevTx inputs,
 {
     // Take over previous transactions' spent pointers
     // fBlock is true when this is called from AcceptBlock when a new best-block is added to the blockchain
-    // fMiner is true when called from the internal barcoin miner
+    // fMiner is true when called from the internal progressid miner
     // ... both are false when called from CTransaction::AcceptToMemoryPool
     if (!IsCoinBase())
     {
@@ -1925,7 +1925,7 @@ bool CheckDiskSpace(uint64 nAdditionalBytes)
         string strMessage = _("Warning: Disk space is low");
         strMiscWarning = strMessage;
         printf("*** %s\n", strMessage.c_str());
-        uiInterface.ThreadSafeMessageBox(strMessage, "barcoin", CClientUIInterface::OK | CClientUIInterface::ICON_EXCLAMATION | CClientUIInterface::MODAL);
+        uiInterface.ThreadSafeMessageBox(strMessage, "progressid", CClientUIInterface::OK | CClientUIInterface::ICON_EXCLAMATION | CClientUIInterface::MODAL);
         StartShutdown();
         return false;
     }
@@ -1999,10 +1999,10 @@ bool LoadBlockIndex(bool fAllowNew)
     {
         if (!fAllowNew)
             return false;
-    
-        
+
+
         // Genesis block
-        const char* pszTimestamp = "Building a coin to show the world how...";
+        const char* pszTimestamp = "ZEON";
         CTransaction txNew;
         txNew.vin.resize(1);
         txNew.vout.resize(1);
@@ -2014,13 +2014,13 @@ bool LoadBlockIndex(bool fAllowNew)
         block.hashPrevBlock = 0;
         block.hashMerkleRoot = block.BuildMerkleTree();
         block.nVersion = 1;
-        block.nTime    = 1369623856; //epochtime
+        block.nTime    = 1519665388; //epochtime
         block.nBits    = 0x1e0ffff0;
         block.nNonce   = 1345972;
 
         if (fTestNet)
         {
-            block.nTime    = 1369591342;
+            block.nTime    = 1519665388;
             block.nNonce   = 440824;
         }
 

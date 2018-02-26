@@ -1,3 +1,2 @@
-FooCoin (FOO)
-
-Blah, blah, blah.
+ProgressID (FOO)
+V1.0
